@@ -34,7 +34,7 @@
 #include "llvm/DebugInfo.h"
 #include "llvm/DIBuilder.h"
 #include "llvm/IRBuilder.h"
-#define LLVM32
+#define LLVM32 1
 #else
 #include "llvm/Analysis/DebugInfo.h"
 #include "llvm/Analysis/DIBuilder.h"
@@ -234,7 +234,7 @@ static Function *to_function(jl_lambda_info_t *li, bool cstyle)
     assert(f != NULL);
     nested_compile = last_n_c;
     //f->dump();
-    //verifyFunction(*f);
+    verifyFunction(*f);
     FPM->run(*f);
     //n_compile++;
     // print out the function's LLVM code
