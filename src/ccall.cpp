@@ -725,10 +725,12 @@ std::string generate_func_sig(Type **lrt, Type **prt, int &sret,
     }
 
     size_t i;
+    bool current_isVa = false;
     for(i=0; i < nargt; i++) {
         jl_value_t *tti = jl_tupleref(tt,i);
         if (jl_is_vararg_type(tti)) {
             tti = jl_tparam0(tti);
+            current_isVa = true;
         }
         paramattrs.push_back(AttrBuilder());
         if (jl_is_bitstype(tti)) {
@@ -806,7 +808,8 @@ std::string generate_func_sig(Type **lrt, Type **prt, int &sret,
         if(pat != NULL)
             t = pat;
 
-        fargt_sig.push_back(t);
+        if(!current_isVa)
+            fargt_sig.push_back(t);
 
     }
 
